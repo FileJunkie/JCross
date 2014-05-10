@@ -12,13 +12,13 @@ abstract class JCross(descriptionColumns : Seq[Seq[Long]], descriptionRows : Seq
     blocks.equals(description)
   }
 
-  protected def validate(cells: Seq[Seq[Cell.Value]], descriptionColumns: Seq[Seq[Long]], descriptionRows: Seq[Seq[Long]]): Boolean = {
+  protected def validate(cells: Seq[Seq[Cell.Value]]): Boolean = {
     val cellsTrans = cells.transpose
 
-    !(1 to xSize).exists(i => {
+    !(0 until xSize).exists(i => {
       !validate(cells(i), descriptionColumns(i))
     }) &&
-    !(1 to ySize).exists(i => {
+    !(0 until ySize).exists(i => {
       !validate(cellsTrans(i), descriptionRows(i))
     })
   }
@@ -61,7 +61,7 @@ abstract class JCross(descriptionColumns : Seq[Seq[Long]], descriptionRows : Seq
     def headerToString : String = {
       val sb = new StringBuilder()
 
-      (0 to topElems - 1) foreach (i => {
+      (0 until topElems) foreach (i => {
         sb ++= " " * leftShift
 
         descriptionColumns foreach (colDefList => {
@@ -87,7 +87,7 @@ abstract class JCross(descriptionColumns : Seq[Seq[Long]], descriptionRows : Seq
     def bodyToString: String = {
       val sb = new StringBuilder()
 
-      (0 to ySize - 1) foreach (i => {
+      (0 until ySize) foreach (i => {
         val rowDefList = descriptionRows(i)
         val descriptionipt = (rowDefList map (_.toString)).reduceLeft((m: String, n: String) => m + " " + n)
 
@@ -95,7 +95,7 @@ abstract class JCross(descriptionColumns : Seq[Seq[Long]], descriptionRows : Seq
 
         sb ++= descriptionipt
 
-        val str = ((0 to xSize - 1) map (j => {
+        val str = ((0 until xSize) map (j => {
           val cell = cells(j)(i)
 
           val symbol = cell match {
