@@ -6,8 +6,27 @@ abstract class JCross(descriptionColumns : Seq[Seq[Long]], descriptionRows : Seq
 
   protected def cells: Seq[Seq[Cell.Value]]
 
-  protected def validate(cells: Seq[Cell.Value], currDescription: Seq[Long], otherDescription: Seq[Long]): Boolean = {
-    true
+  protected def validate(cells: Seq[Cell.Value], currDescription: Seq[Long]): Boolean = {
+    false
+  }
+
+  protected def findBlocks(cells: Seq[Cell.Value]) : List[Long] = {
+    val firstBlackIdx = cells.indexOf(Cell.Black)
+
+    if(firstBlackIdx == 0){
+      val firstNonBlackIds = cells.indexWhere(_ != Cell.Black)
+
+      if(firstNonBlackIds != -1)
+        firstNonBlackIds :: findBlocks(cells.drop(firstNonBlackIds))
+      else
+        cells.length :: Nil
+    }
+    else if(firstBlackIdx == -1){
+      Nil
+    }
+    else{
+      findBlocks(cells.drop(firstBlackIdx))
+    }
   }
 
   override def toString = {
