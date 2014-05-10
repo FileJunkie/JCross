@@ -6,8 +6,10 @@ abstract class JCross(descriptionColumns : Seq[Seq[Long]], descriptionRows : Seq
 
   protected def cells: Seq[Seq[Cell.Value]]
 
-  protected def validate(cells: Seq[Cell.Value], currDescription: Seq[Long]): Boolean = {
-    false
+  protected def validate(cells: Seq[Cell.Value], description: Seq[Long]): Boolean = {
+    val blocks = findBlocks(cells)
+
+    blocks.equals(description)
   }
 
   protected def findBlocks(cells: Seq[Cell.Value]) : List[Long] = {
