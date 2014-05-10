@@ -1,6 +1,6 @@
 package name.filejunkie
 
-object scalaTryout {
+object JCrossTest {
 
   def main(args: Array[String]): Unit = {
     val jCross = new JCrossBruteForce(
