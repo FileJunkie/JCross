@@ -12,6 +12,17 @@ abstract class JCross(descriptionColumns : Seq[Seq[Long]], descriptionRows : Seq
     blocks.equals(description)
   }
 
+  protected def validate(cells: Seq[Seq[Cell.Value]], descriptionColumns: Seq[Seq[Long]], descriptionRows: Seq[Seq[Long]]): Boolean = {
+    val cellsTrans = cells.transpose
+
+    !(1 to xSize).exists(i => {
+      !validate(cells(i), descriptionColumns(i))
+    }) &&
+    !(1 to ySize).exists(i => {
+      !validate(cellsTrans(i), descriptionRows(i))
+    })
+  }
+
   protected def findBlocks(cells: Seq[Cell.Value]) : List[Long] = {
     val firstBlackIdx = cells.indexOf(Cell.Black)
 
